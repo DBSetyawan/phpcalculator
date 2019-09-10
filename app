@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+namespace mesinhitung\phpcalculator;
 
 use Illuminate\Console\Application;
 use Illuminate\Container\Container;

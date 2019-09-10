@@ -1,6 +1,6 @@
 {
-    "name": "jakmall/recruitment-calculator",
-    "description": "Jakmall Software Engineer Technical Test : Jakmall Calculator.",
+    "name": "root/app",
+    "description": "Technical test Engineering Calculator JakMall",
     "keywords": ["jakmall"],
     "license": "proprietary",
     "type": "project",
@@ -11,9 +11,15 @@
         "illuminate/events": "5.8.*",
         "illuminate/support": "5.8.*"
     },
-    "autoload": {
+    "authors": [
+        {
+            "name": "daniel",
+            "email": "artexsdns@gmail.com"
+        }
+    ],
+    "autoload":{
         "psr-4": {
-            "Jakmall\\Recruitment\\Calculator\\": "src/"
+            "mesinhitung\\phpcalculator\\" : "src/"
         }
     },
     "config": {
