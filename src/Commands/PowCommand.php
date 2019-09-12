@@ -2,54 +2,59 @@
 
 namespace mesinhitung\phpcalculator\Commands;
 
+use Illuminate\Support\Arr;
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Input\InputArgument;
 
-class AddCommand extends Command
+class PowCommand extends Command
 {
     /**
      * @var string
      */
     protected $signature;
-
     /**
      * @var string
      */
     protected $description;
 
-    public function __construct($signature = null, $description = null)
+    public function __construct()
     {
+
         $commandVerb = $this->getCommandVerb();
+
         $this->signature = sprintf(
-            '%s {numbers* : The numbers to be %s}',
+            '%s {base : The base number}{exp : The exp number}',
             $commandVerb,
             $this->getCommandPassiveVerb()
         );
-        $this->description = sprintf('%s all given Numbers', ucfirst($commandVerb));
+        $this->description = sprintf('Exponent the given number', ucfirst($commandVerb));
         parent::__construct($this);
+
     }
 
     protected function getCommandVerb(): string
     {
-        return 'add';
+        return 'pow';
     }
 
     protected function getCommandPassiveVerb(): string
     {
-        return 'added';
+        return 'number';
     }
 
     public function handle(): void
     {
-        $numbers = $this->getInput();
-        $description = $this->generateCalculationDescription($numbers);
-        $result = $this->calculateAll($numbers);
+        $numbers1 = (array) $this->getInputbase();
+        $data = Arr::only($numbers1, ['base', 'exp']);
+        $description = $this->generateCalculationDescription($data);
+        $result = $this->calculateAll($data);
 
         $this->comment(sprintf('%s = %s', $description, $result));
     }
 
-    protected function getInput(): array
+    protected function getInputbase(): array
     {
-        return $this->argument();
+        return $this->arguments();
     }
 
     protected function generateCalculationDescription(array $numbers): string
@@ -62,7 +67,7 @@ class AddCommand extends Command
 
     protected function getOperator(): string
     {
-        return '+';
+        return '^';
     }
 
     /**
@@ -78,7 +83,7 @@ class AddCommand extends Command
             return $number;
         }
 
-        return $this->calculate($this->calculateAll($numbers), $number);
+        return $this->calculates($this->calculateAll($numbers), $number);
     }
 
     /**
@@ -87,8 +92,9 @@ class AddCommand extends Command
      *
      * @return int|float
      */
-    protected function calculate($number1, $number2)
+    protected function calculates($number1, $number2)
     {
-        return $number1 + $number2;
+        $data = pow($number1,$number2);
+        return $data;
     }
 }

@@ -4,7 +4,7 @@ namespace mesinhitung\phpcalculator\Commands;
 
 use Illuminate\Console\Command;
 
-class AddCommand extends Command
+class DivideCommand extends Command
 {
     /**
      * @var string
@@ -16,11 +16,11 @@ class AddCommand extends Command
      */
     protected $description;
 
-    public function __construct($signature = null, $description = null)
+    public function __construct()
     {
         $commandVerb = $this->getCommandVerb();
         $this->signature = sprintf(
-            '%s {numbers* : The numbers to be %s}',
+            '%s {Numbers* : The numbers to be %s}',
             $commandVerb,
             $this->getCommandPassiveVerb()
         );
@@ -30,12 +30,12 @@ class AddCommand extends Command
 
     protected function getCommandVerb(): string
     {
-        return 'add';
+        return 'divide';
     }
 
     protected function getCommandPassiveVerb(): string
     {
-        return 'added';
+        return 'divided';
     }
 
     public function handle(): void
@@ -49,7 +49,7 @@ class AddCommand extends Command
 
     protected function getInput(): array
     {
-        return $this->argument();
+        return $this->argument('Numbers');
     }
 
     protected function generateCalculationDescription(array $numbers): string
@@ -62,7 +62,7 @@ class AddCommand extends Command
 
     protected function getOperator(): string
     {
-        return '+';
+        return '/';
     }
 
     /**
@@ -78,7 +78,8 @@ class AddCommand extends Command
             return $number;
         }
 
-        return $this->calculate($this->calculateAll($numbers), $number);
+
+        return $this->calculates($this->calculateAll($numbers), $number);
     }
 
     /**
@@ -87,8 +88,8 @@ class AddCommand extends Command
      *
      * @return int|float
      */
-    protected function calculate($number1, $number2)
+    protected function calculates($number1, $number2)
     {
-        return $number1 + $number2;
+        return $number1 / $number2;
     }
 }
